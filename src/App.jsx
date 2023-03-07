@@ -4,6 +4,7 @@ import cx from 'classnames';
 import './App.css';
 import Command from './components/command/Command';
 import { getCommands } from './api/spyder';
+import { initiateMouseActions } from './utils/dom/document';
 
 export default function App() {
   const [open, setOpen] = React.useState(true);
@@ -18,7 +19,7 @@ export default function App() {
       const c = await getCommands();
       setCommands(c);
     })();
-  
+    initiateMouseActions();
     return () => {
       // this now gets called when the component unmounts
     };
