@@ -5,8 +5,8 @@
 }
 
 .label {
-    padding: 0 6px;
+    padding: 0 8px;
+    text-align: left;
     font-size: 12px;
     width: calc(100% - 40px);
-    text-align: left;
 }
