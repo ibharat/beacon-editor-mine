@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';;
 import Draggable from 'react-draggable';
 import cx from 'classnames';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import './App.css';
 import Command from './components/command/Command';
 import { getCommands } from './api/spyder';
@@ -25,6 +26,13 @@ export default function App() {
     };
   }, []);
 
+  const refresh = () => {
+    (async () => {
+      const c = await getCommands();
+      setCommands(c);
+    })();
+  };
+
   console.log(commands);
 
   return (
@@ -32,7 +40,10 @@ export default function App() {
         handle=".handle"
       >
         <div className={cx('editor')}>
-          <div className={cx('handle', 'label')}>Commands</div>
+          <div className={cx('handle', 'center')}>
+            <div className='label'>Commands</div>
+            <RefreshIcon onClick={refresh} />
+          </div>
           <div className='commands'>
             {commands.map(x => (<Command key={x._id} command={x}/>))}
           </div>

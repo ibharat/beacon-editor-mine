@@ -17,11 +17,17 @@
 }
 
 .label {
-  text-align: left;
-  background: pink;
-  padding: 8px;
-  color: white;
+  padding: 2px 4px;
+}
+
+.center {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: pink;
   cursor: move;
+  padding: 8px;
+  color: white;
 }
