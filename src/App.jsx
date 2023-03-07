@@ -1,34 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import React, { useState, useEffect } from 'react';;
+import Draggable from 'react-draggable';
+import cx from 'classnames';
+import './App.css';
+import Command from './components/command/Command';
+import { getCommands } from './api/spyder';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [open, setOpen] = React.useState(true);
+  const [commands, setCommands] = React.useState([]);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    (async () => {
+      const c = await getCommands();
+      setCommands(c);
+    })();
+  
+    return () => {
+      // this now gets called when the component unmounts
+    };
+  }, []);
+
+  console.log(commands);
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+      <Draggable
+        handle=".handle"
+      >
+        <div className={cx('editor')}>
+          <div className={cx('handle', 'label')}>Commands</div>
+          <div className='commands'>
+            {commands.map(x => (<Command key={x._id} command={x}/>))}
+          </div>
+        </div>
+      </Draggable>
+  );
 }
-
-export default App
