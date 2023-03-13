@@ -11,3 +11,8 @@
     font-size: 12px;
     width: calc(100% - 40px);
 }
+
+.cursor {
+    cursor: pointer;
+    padding-left: 8px;
+}

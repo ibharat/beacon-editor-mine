@@ -7,6 +7,7 @@ import './App.css';
 import Command from './components/command/Command';
 import { getCommands } from './api/spyder';
 import { checkParent } from './utils/dom/document';
+import CreateCommand from './components/command/Create';
 
 export default function App() {
   const [openForm, toggleForm] = React.useState(false);
@@ -16,6 +17,9 @@ export default function App() {
 
   const initiateMouseActions  = () => {
     document.addEventListener('mouseout', (e) => {
+      if (openForm) {
+        return false;
+      }
       const { target } = e;
       if (!checkParent(target) && !openForm) {
         target.style.outline = 'none';
@@ -23,22 +27,29 @@ export default function App() {
       }
     });
     document.addEventListener('mouseover', (e) => {
+      if (openForm) {
+        return false;
+      }
         const { target } = e;
         if (!checkParent(target) && !openForm) {
           target.style.outline = '1px solid black';
           target.setAttribute('beacon-marker', 'marker')
         }
     });
-
     document.addEventListener('click', (e) => {
       const { target } = e;
+      if (openForm) {
+        return false;
+      }
       if (!checkParent(target) && !openForm) {
         const isExists = target.getAttribute('beacon-marker');
         e.stopPropagation();
         e.preventDefault();
+        if (!isExists) {
+          return;
+        }
         toggleForm(true);
         setElement(target);
-        console.log(isExists);
       }
   });
   }
@@ -106,7 +117,7 @@ export default function App() {
               <RefreshIcon onClick={refresh} />
             </div>
             <div className='commands'>
-              {commands.map(x => (<Command key={x._id} command={x}/>))}
+              {commands.map(x => (<Command refresh={refresh} key={x._id} command={x}/>))}
             </div>
           </div>
         </Draggable>
@@ -124,7 +135,7 @@ export default function App() {
               horizontal: 'right',
             }}
           >
-            The content of the Popover.
+            <CreateCommand element={element} />
           </Popover>
         )}
       </>

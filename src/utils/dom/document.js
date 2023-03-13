@@ -11,10 +11,13 @@ export const initiateMouseActions = () => {
 
 export const checkParent = (child) => {
     const editor = document.getElementById("beacon-editor");
-    if (child.parentElement.id === "popover") {
+    const popover = document.getElementById('popover');
+    if (popover) {
         return true;
     }
     if (editor.contains(child))
         return true;
+    // if (form.contains(child))
+    //     return true;
     return false;
 }
