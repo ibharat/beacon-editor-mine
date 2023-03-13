@@ -8,3 +8,13 @@ export const initiateMouseActions = () => {
         target.style.outline = '1px solid black';
     });
 }
+
+export const checkParent = (child) => {
+    const editor = document.getElementById("beacon-editor");
+    if (child.parentElement.id === "popover") {
+        return true;
+    }
+    if (editor.contains(child))
+        return true;
+    return false;
+}
