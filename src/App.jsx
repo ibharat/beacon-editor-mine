@@ -3,11 +3,11 @@ import Draggable from 'react-draggable';
 import cx from 'classnames';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import Popover from '@mui/material/Popover';
-import './App.css';
 import Command from './components/command/Command';
 import { getCommands } from './api/spyder';
 import { checkParent } from './utils/dom/document';
 import CreateCommand from './components/command/Create';
+import './App.css';
 
 export default function App() {
   const [openForm, toggleForm] = React.useState(false);
@@ -17,9 +17,6 @@ export default function App() {
 
   const initiateMouseActions  = () => {
     document.addEventListener('mouseout', (e) => {
-      if (openForm) {
-        return false;
-      }
       const { target } = e;
       if (!checkParent(target) && !openForm) {
         target.style.outline = 'none';
@@ -27,20 +24,14 @@ export default function App() {
       }
     });
     document.addEventListener('mouseover', (e) => {
-      if (openForm) {
-        return false;
+      const { target } = e;
+      if (!checkParent(target) && !openForm) {
+        target.style.outline = '1px solid black';
+        target.setAttribute('beacon-marker', 'marker')
       }
-        const { target } = e;
-        if (!checkParent(target) && !openForm) {
-          target.style.outline = '1px solid black';
-          target.setAttribute('beacon-marker', 'marker')
-        }
     });
     document.addEventListener('click', (e) => {
       const { target } = e;
-      if (openForm) {
-        return false;
-      }
       if (!checkParent(target) && !openForm) {
         const isExists = target.getAttribute('beacon-marker');
         e.stopPropagation();
