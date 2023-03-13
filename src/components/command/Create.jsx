@@ -6,7 +6,7 @@ import { addCommands } from '../../api/spyder';
 import { getInitialValues, Schema } from './utils';
 import styles from './Create.module.css';
 
-export default function CreateCommand({ element }){
+export default function CreateCommand({ element, refresh }){
     const isUpdate = !!element._id;
 
     const addCommand = async (values) => {

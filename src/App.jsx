@@ -126,7 +126,7 @@ export default function App() {
               horizontal: 'right',
             }}
           >
-            <CreateCommand element={element} />
+            <CreateCommand refresh={refresh} element={element} />
           </Popover>
         )}
       </>
